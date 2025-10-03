@@ -74,7 +74,11 @@ export const FrontMatter: QuartzTransformerPlugin<Partial<Options>> = (userOpts)
             if (data.title != null && data.title.toString() !== "") {
               data.title = data.title.toString()
             } else {
-              data.title = file.stem ?? i18n(cfg.configuration.locale).propertyDefaults.title
+              // If the file has no explicit title, derive one from the filename
+              // Replace underscores with spaces so filenames like `my_article.md`
+              // become `my article` in the page title.
+              const rawTitle = file.stem ?? i18n(cfg.configuration.locale).propertyDefaults.title
+              data.title = rawTitle.toString().replace(/_+/g, " ")
             }
 
             const tags = coerceToArray(coalesceAliases(data, ["tags", "tag"]))

@@ -57,14 +57,29 @@ export function getFullSlug(window: Window): FullSlug {
 function sluggify(s: string): string {
   return s
     .split("/")
-    .map((segment) =>
-      segment
-        .replace(/\s/g, "-")
-        .replace(/&/g, "-and-")
-        .replace(/%/g, "-percent")
-        .replace(/\?/g, "")
-        .replace(/#/g, ""),
-    )
+    .map((segment) => {
+      // Normalize unicode (decompose accents), remove combining marks
+      let seg = segment.normalize("NFKD").replace(/[\u0300-\u036f]/g, "")
+
+      // Convert common symbols to words
+      seg = seg.replace(/&/g, "-and-")
+      seg = seg.replace(/%/g, "-percent")
+
+      // Normalize a variety of dashes to ASCII hyphen
+      seg = seg.replace(/[\u2012-\u2015\u2212]/g, "-")
+
+      // Replace whitespace with hyphen
+      seg = seg.replace(/\s+/g, "-")
+
+      // Remove any character that is not a letter, number or hyphen
+      // Use Unicode property escapes to preserve non-latin letters
+      seg = seg.replace(/[^\p{L}\p{N}-]+/gu, "")
+
+      // Collapse multiple hyphens and trim
+      seg = seg.replace(/-+/g, "-").replace(/^-|-$/g, "")
+
+      return seg.toLowerCase()
+    })
     .join("/") // always use / as sep
     .replace(/\/$/, "")
 }

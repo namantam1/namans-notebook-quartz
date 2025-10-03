@@ -18,7 +18,8 @@
     "format": "npx prettier . --write",
     "test": "tsx --test",
     "profile": "0x -D prof ./quartz/bootstrap-cli.mjs build --concurrency=1",
-    "prepare": "husky"
+    "prepare": "husky",
+    "start": "npx quartz build --serve -d ~/Documents/naman-vault"
   },
   "engines": {
     "npm": ">=10.9.2",
