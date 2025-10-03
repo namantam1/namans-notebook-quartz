@@ -71,9 +71,9 @@ function sluggify(s: string): string {
       // Replace whitespace with hyphen
       seg = seg.replace(/\s+/g, "-")
 
-      // Remove any character that is not a letter, number or hyphen
+      // Remove any character that is not a letter, number, dot or hyphen
       // Use Unicode property escapes to preserve non-latin letters
-      seg = seg.replace(/[^\p{L}\p{N}-]+/gu, "")
+      seg = seg.replace(/[^^\p{L}\p{N}.-]+/gu, "")
 
       // Collapse multiple hyphens and trim
       seg = seg.replace(/-+/g, "-").replace(/^-|-$/g, "")

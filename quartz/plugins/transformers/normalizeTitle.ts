@@ -10,28 +10,33 @@ import { QuartzTransformerPlugin } from "../types"
 export const NormalizeTitle: QuartzTransformerPlugin = () => ({
   name: "NormalizeTitle",
   markdownPlugins() {
-    return [() => {
-      return (_, file) => {
-        try {
-          const frontmatter = file.data?.frontmatter
-          const hasTitle = frontmatter && typeof frontmatter.title === "string" && frontmatter.title.trim() !== ""
+    return [
+      () => {
+        return (_, file) => {
+          try {
+            const frontmatter = file.data?.frontmatter
+            const hasTitle =
+              frontmatter &&
+              typeof frontmatter.title === "string" &&
+              frontmatter.title.trim() !== ""
 
-          if (!hasTitle) {
-            const rawTitle = file.stem?.toString() ?? ""
-            // replace one or more underscores with a single space
-            const normalized = rawTitle.replace(/_+/g, " ")
-            // ensure vfile frontmatter object exists
-            file.data = file.data || {}
-            // create a frontmatter object that satisfies the declared vfile.DataMap
-            file.data.frontmatter = {
-              ...(file.data.frontmatter ?? {}),
-              title: normalized,
+            if (!hasTitle) {
+              const rawTitle = file.stem?.toString() ?? ""
+              // replace one or more underscores with a single space
+              const normalized = rawTitle.replace(/_+/g, " ")
+              // ensure vfile frontmatter object exists
+              file.data = file.data || {}
+              // create a frontmatter object that satisfies the declared vfile.DataMap
+              file.data.frontmatter = {
+                ...(file.data.frontmatter ?? {}),
+                title: normalized,
+              }
             }
+          } catch (e) {
+            // swallow errors to avoid breaking the pipeline for one file
           }
-        } catch (e) {
-          // swallow errors to avoid breaking the pipeline for one file
         }
-      }
-    }]
+      },
+    ]
   },
 })

@@ -73,11 +73,11 @@ const config: QuartzConfig = {
       Plugin.Description(),
       Plugin.Latex({ renderEngine: "katex" }),
     ],
-  // Filters run after transformers and allow excluding pages from the final
-  // output. Use ExcludeTags to drop any file that has a specific tag.
-  // Example: to exclude pages tagged with #private or #wip
-  // filters: [Plugin.RemoveDrafts(), Plugin.ExcludeTags({ tags: ["private", "wip"] })],
-  filters: [Plugin.RemoveDrafts(), Plugin.ExcludeTags({tags: ["excalidraw"]})],
+    // Filters run after transformers and allow excluding pages from the final
+    // output. Use ExcludeTags to drop any file that has a specific tag.
+    // Example: to exclude pages tagged with #private or #wip
+    // filters: [Plugin.RemoveDrafts(), Plugin.ExcludeTags({ tags: ["private", "wip"] })],
+    filters: [Plugin.RemoveDrafts(), Plugin.ExcludeTags({ tags: ["excalidraw"] })],
     emitters: [
       Plugin.AliasRedirects(),
       Plugin.ComponentResources(),

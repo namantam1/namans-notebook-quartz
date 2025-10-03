@@ -4,7 +4,7 @@ This repository contains Quartz v4, a digital garden framework built with TypeSc
 
 ## Core Architecture
 
-- **Build Pipeline**: 
+- **Build Pipeline**:
   - Entry point is `quartz/bootstrap-cli.mjs` which handles CLI args and transpilation
   - Content processing happens in `quartz/build.ts` using a worker-based architecture for parallel processing
   - Uses unified/remark/rehype for Markdown-to-HTML transformation with plugin system
@@ -19,12 +19,14 @@ This repository contains Quartz v4, a digital garden framework built with TypeSc
 ## Development Workflows
 
 ### Content Development
+
 1. Add Markdown files to `/content`
 2. Run local preview: `npx quartz build --serve`
 3. View at http://localhost:8080
 4. Sync to GitHub: `npx quartz sync`
 
 ### Framework Development
+
 1. TypeScript code in `/quartz` directory
 2. Uses esbuild for transpilation/bundling
 3. Worker-based processing for performance
@@ -32,6 +34,7 @@ This repository contains Quartz v4, a digital garden framework built with TypeSc
 5. Format code: `npm run format`
 
 ### Critical Files
+
 - `quartz.config.ts`: Main configuration (themes, plugins, etc)
 - `quartz.layout.ts`: Page layout structure
 - `package.json`: Scripts and dependencies
@@ -39,6 +42,7 @@ This repository contains Quartz v4, a digital garden framework built with TypeSc
 ## Conventions
 
 ### Content Files
+
 - Use frontmatter for metadata:
   ```md
   ---
@@ -53,18 +57,21 @@ This repository contains Quartz v4, a digital garden framework built with TypeSc
 - Images/attachments go in `/content`
 
 ### Component Development
+
 - Components use Preact
 - Must handle both static SSR and client hydration
 - Static assets emitted to `/public`
 - Plugin system for content transformation
 
 ### Configuration
+
 - Override defaults in `quartz.config.ts`
 - Plugin configuration done through options object
 - Theme customization via `configuration.theme`
 - Ignore patterns set in `configuration.ignorePatterns`
 
 ### Performance
+
 - Uses worker threads for parallel processing
 - Caches transpiled code in `.quartz-cache`
 - SPA routing optional via `enableSPA` config
