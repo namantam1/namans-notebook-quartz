@@ -29,12 +29,29 @@ export default ((opts?: Partial<ContentMetaOptions>) => {
     if (text) {
       const segments: (string | JSX.Element)[] = []
 
-      if (fileData.dates) {
-        segments.push(<Date date={getDate(cfg, fileData)!} locale={cfg.locale} />)
-      }
+      if (fileData.dates && fileData.slug !== "index") {
+        segments.push(
+          <>
+            Created: <Date date={getDate(cfg, fileData, "created")!} locale={cfg.locale} />
+          </>,
+        )
 
+        // Only show the modified date if it's NOT equal to the created date
+        // Extract the actual date values for comparison
+        const datecreatedValue = getDate(cfg, fileData, "created")
+        const datemodifiedValue = getDate(cfg, fileData, "modified")
+        // Compare the actual date values (ignoring the JSX components)
+        const areDatesNotEqual = datecreatedValue?.getTime() !== datemodifiedValue?.getTime()
+        if (areDatesNotEqual) {
+          segments.push(
+            <>
+              Modified: <Date date={getDate(cfg, fileData, "modified")!} locale={cfg.locale} />
+            </>,
+          )
+        }
+      }
       // Display reading time if enabled
-      if (options.showReadingTime) {
+      if (options.showReadingTime && fileData.slug !== "index") {
         const { minutes, words: _words } = readingTime(text)
         const displayedTime = i18n(cfg.locale).components.contentMeta.readingTime({
           minutes: Math.ceil(minutes),

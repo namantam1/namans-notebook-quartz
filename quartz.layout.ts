@@ -2,10 +2,9 @@ import { PageLayout, SharedLayout } from "./quartz/cfg"
 import * as Component from "./quartz/components"
 
 // Custom config
-const breadcrumbsConfig = { 
-  rootName: "🏠"
+const breadcrumbsConfig = {
+  rootName: "🏠",
 }
-
 
 // components shared across all pages
 export const sharedPageComponents: SharedLayout = {
@@ -55,7 +54,11 @@ export const defaultContentPageLayout: PageLayout = {
 
 // components for pages that display lists of pages  (e.g. tags or folders)
 export const defaultListPageLayout: PageLayout = {
-  beforeBody: [Component.Breadcrumbs(breadcrumbsConfig), Component.ArticleTitle(), Component.ContentMeta()],
+  beforeBody: [
+    Component.Breadcrumbs(breadcrumbsConfig),
+    Component.ArticleTitle(),
+    Component.ContentMeta(),
+  ],
   left: [
     Component.PageTitle(),
     Component.MobileOnly(Component.Spacer()),
